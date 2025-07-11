@@ -1,5 +1,7 @@
-# PERN-Starter-Template
-Starter template, using PERN stack, keeping backend and frontend in seperate directories. Refer to README for installations and notes. 
+For this project we will be setting up an API for users to be able to sign in access and comment on my personal blog, while on my admin side I can post and edit my posts. This is practice for me to keep my backend and frontend inside their own repos, keeping routes protected with JWT's upon requests from routes.  
+
+
+---Template Notes---
 
 (In Progress) Want to make the frontend ready with React and vitest connected to backend and ready to launch.
 JWT's being used for securing routes between frontend and backend(REST API), found tutorial: https://www.youtube.com/watch?v=7nafaH9SddU  CORS still needs to be implemented !
