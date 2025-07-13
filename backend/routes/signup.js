@@ -10,4 +10,4 @@ signupRouter.post("/", validateCreateUser(),  handleCreateUser);
 
 
 
-module.exports = signupRouter
+module.exports = {signupRouter}

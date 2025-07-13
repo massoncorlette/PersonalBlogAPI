@@ -10,4 +10,4 @@ homeRouter.get("/", (req, res, next) => {
   return displayHome(req, res, next);
 });
 
-module.exports = homeRouter;
+module.exports = {homeRouter};
