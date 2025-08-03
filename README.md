@@ -1,5 +1,8 @@
 For this project we will be setting up an API for users to be able to sign in access and comment on my personal blog, while on my admin side I can post and edit my posts. This is practice for me to keep my backend and frontend inside their own repos, keeping routes protected with JWT's upon requests from routes.  
 
+Review this for following REST, REVIEW THE MODULAR SECTION at the bottom of page:
+https://www.robinwieruch.de/node-express-server-rest-api/
+
 
 ---Template Notes---
 
