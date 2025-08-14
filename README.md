@@ -4,6 +4,18 @@ Review this for following REST, REVIEW THE MODULAR SECTION at the bottom of page
 https://www.robinwieruch.de/node-express-server-rest-api/
 
 
+ToDo:
+  Backend
+  - Setup all URI routes
+  - Testing all routes with POSTMAN
+  - Implement passport JWT strategy
+  
+  Frontend
+  - Setup fetch components w/ native fetch or axios
+  - console.log data for now
+  - Look into React fetch data documentation
+
+
 ---Template Notes---
 
 (In Progress) Want to make the frontend ready with React and vitest connected to backend and ready to launch.
