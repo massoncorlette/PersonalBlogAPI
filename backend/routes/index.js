@@ -11,6 +11,8 @@ indexRouter.get("/", async (req, res, next) => {
 
 indexRouter.post("/login", (req, res) => {
 
+  //parse req.body from React component
+
   const user = {
     id: 1,
     username: 'brad',
@@ -18,11 +20,14 @@ indexRouter.post("/login", (req, res) => {
   }
 
 
+  // sends user obj, secretkey and exp as payload
   jwt.sign({user:user}, 'secretkey', { expiresIn: '2 days' }, (err,token) => {
     res.json({
       token:token
     });
   });
+
+  res.redirect("/home");
 });
 
 

@@ -1,13 +1,10 @@
 const { Router } = require("express");
-const { displayHome } = require("../controllers/viewController");
-
-
 
 const homeRouter = Router();
 
-homeRouter.get("/", (req, res, next) => {
 
-  return displayHome(req, res, next);
+homeRouter.get('/', (req, res) => {
+  return res.send("load home");
 });
 
-module.exports = {homeRouter};
+module.exports = {homeRouter}
