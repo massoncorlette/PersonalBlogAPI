@@ -4,6 +4,9 @@ const LocalStrategy = require("passport-local").Strategy;
 const pool = require("./pool");
 
 passport.use(
+
+  // CHANGE TO ORM SYNTAX //
+
   new LocalStrategy(async (username, password, done) => {
     try {
       const { rows } = await pool.query(
@@ -31,7 +34,7 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.user_id);
+  done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {

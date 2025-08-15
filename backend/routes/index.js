@@ -1,5 +1,3 @@
-// const authenticateUser = require("../config/passport");
-
 const { Router } = require("express");
 
 const indexRouter = Router();

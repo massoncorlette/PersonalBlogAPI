@@ -18,6 +18,14 @@ datasource db {
 // for this project going to depend on controller for error handling
 // for constraints, future project will want to add constraints here as well for extra safety
 
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String 
+  expiresAt   DateTime
+}
+
 model User {
   id      Int      @id @default(autoincrement())
   email   String   @unique

@@ -1,6 +1,8 @@
 const { prisma } = require('../viewController');
 const { validationResult } = require("express-validator");
 
+const bcrypt = require("bcryptjs");
+
 
 async function handleCreatePost(req, res, next) {
 
@@ -24,9 +26,10 @@ async function handleCreateUser(req, res, next) {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     await prisma.user.create({
       data: {
-        email: req.body.email,
-        fname: req.body.fname,
-        lname: req.body.lname,
+        email: req.body.username,
+        fname: req.body.firstname,
+        lname: req.body.lastname,
+        alias: req.body.alias,
         password: hashedPassword,
       }
    });
