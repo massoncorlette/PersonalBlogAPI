@@ -1,4 +1,5 @@
 const { prisma } = require('../viewController');
+const { validationResult } = require("express-validator");
 
 
 async function handleCreatePost(req, res, next) {

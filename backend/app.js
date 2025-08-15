@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const {indexRouter} = require('./routes/index');
 const {signupRouter} = require('./routes/signup');
 const {homeRouter} = require('./routes/home');
@@ -8,6 +7,7 @@ const {postsRouter} = require('./routes/posts');
 const {commentsRouter} = require('./routes/comments');
 
 const app = express();
+app.set('view engine', 'ejs'); // Remove when using React
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
