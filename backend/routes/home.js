@@ -1,18 +1,16 @@
 const { Router } = require("express");
-
 const homeRouter = Router();
+var jwt = require('jsonwebtoken');
 
 
 homeRouter.get('/', (req, res) => {
 
-    // sends user obj, secretkey and exp as payload
-    jwt.sign({user:req.locals.user}, 'secretkey', { expiresIn: '2 days' }, (err,token) => {
+    // payloads user object, last argument callback for generated token
+    jwt.sign(req.user, 'secretkey', { expiresIn: '2 days' }, (err,token) => {
       res.json({
         token:token
       });
     });
-
-  return res.send("load home");
 });
 
 module.exports = {homeRouter}
