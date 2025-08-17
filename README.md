@@ -1,4 +1,5 @@
-For this project we will be setting up an API for users to be able to sign in access and comment on my personal blog, while on my admin side I can post and edit my posts. This is practice for me to keep my backend and frontend inside their own repos, keeping routes protected with JWT's upon requests from routes.  
+For this project we will be setting up an API for users to be able to sign in access and comment on my personal blog, while on my admin side I can post and edit my posts. This is practice for me to keep my backend and frontend inside their own repos, keeping routes protected with JWT's upon requests from routes, and for login authorization.  
+JWT is generated upon user login and and stored client side for further requests until log out. Passport JWT strategy is used to jwt.verify requests instead of manually verify every request. 
 
 Review this for following REST, REVIEW THE MODULAR SECTION at the bottom of page:
 https://www.robinwieruch.de/node-express-server-rest-api/
@@ -11,7 +12,7 @@ ToDo:
   - Implement passport JWT strategy
   
   Frontend
-  - Setup fetch components w/ native fetch or axios
+  - Setup fetch components w/ vanilla fetch
   - console.log data for now
   - Look into React fetch data documentation
 
@@ -38,6 +39,7 @@ npm install bcryptjs -- for serializing passwords
 npm install pg -- for postgreSQL
 npm install connect-pg-simple -- session storage (connecting db to session storage, so we can store session on postgre db opposed to local machine)
 npm install jsonwebtoken -- for using token based authorization
+npm install passport-jwt -- for using webtokens along with Passport authentication
 
 FRONTEND directory:
 npm init - sets up default package.json file (must run!)
