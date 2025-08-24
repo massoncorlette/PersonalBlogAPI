@@ -24,7 +24,7 @@ async function handleCreateUser(req, res, next) {
   // REPLACE FOR TOKEN AUTHURIZATION
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         email: req.body.username,
         fname: req.body.firstname,
@@ -33,7 +33,7 @@ async function handleCreateUser(req, res, next) {
         password: hashedPassword,
       }
    });
-  res.redirect("/");
+  res.json("success", {user:user});
 
   } catch (error) {
     console.error(error);

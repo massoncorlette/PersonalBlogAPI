@@ -2,13 +2,13 @@
 {/* import { useState, useEffect } from 'react' */}
 {/*maybe import local styles */}
 
-function PageTwo() {
+function HomePage() {
 
   return (
     <>
-      <div>Page Two</div>
+      <div>Page One</div>
     </>
   )
 }
 
-export default PageTwo;
+export default HomePage;

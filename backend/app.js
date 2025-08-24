@@ -6,6 +6,8 @@ const { PrismaClient } = require('./generated/prisma/client');
 const passport = require("passport");
 require("./config/passport"); // booting strategy before any initializing
 const pgPool = require("./config/pool");
+const cors = require('cors');
+
 
 const {indexRouter} = require('./routes/index');
 const {signupRouter} = require('./routes/signup');
@@ -20,6 +22,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/styles"));
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
