@@ -55,42 +55,36 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
     });
 }));
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: id,
-      },
-    });
-
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
-});
 
 const { validationResult } = require("express-validator");
+var jwt = require('jsonwebtoken');
 
 const authenticateUser = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    res.locals.errorMsg = "Wrong email or password.";
+   return res.json("Wrong email or password.", errors);
+  };
 
-    return res.status(400).render("index", {
-      errors: errors.array(),
+  passport.authenticate("local", { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.json("Wrong email or password.");
+    }
+
+    jwt.sign({ id: user.id, email: user.email }, "secretkey", { expiresIn: "2d" }, (err, token) => {
+      if (err) {
+        return res.json("Token generation failed");
+      }
+  
+      return res.json({
+        token,
+        user: {
+          id: user.id,
+          email: user.email,
+        },
+      });
     });
-  }
-
-  // If no validation errors, authenticate with passport
-  passport.authenticate("local", {
-    successRedirect: "/home",
-    failureRedirect: "/",
-  })(req, res, next);
+  });
 };
 
 module.exports = { authenticateUser };

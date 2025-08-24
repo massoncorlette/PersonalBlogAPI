@@ -9,9 +9,8 @@ indexRouter.get("/", async (req, res, next) => {
 const {authenticateUser} = require('../config/passport');
 const {validateUser} = require('../controllers/validation');
 
-indexRouter.post("/", (req, res) => {
-  res.json('test');
-});
+
+indexRouter.post("/", validateUser(), authenticateUser);
 
 
 
