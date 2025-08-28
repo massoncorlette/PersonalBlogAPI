@@ -1,6 +1,6 @@
 
-{/* import { useState, useEffect } from 'react' */}
-{/*maybe import local styles */}
+/* import { useState, useEffect } from 'react' */
+/*maybe import local styles */
 import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
@@ -12,8 +12,10 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (event) => {
+    console.log(username);
     event.preventDefault();
     const response = await fetch('http://localhost:5000/', {
+        mode: 'cors',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

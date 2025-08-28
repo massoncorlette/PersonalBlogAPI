@@ -5,9 +5,14 @@ const pool = require("./pool");
 
 const { prisma } = require('../controllers/viewController');
 
-passport.use(
-
-  new LocalStrategy(async (username, password, done) => {
+passport.use(new LocalStrategy({
+  usernameField: 'username',
+  passwordField: 'password',
+  passReqToCallback: true,
+  session: false
+},
+async function(req, username, password, done) {
+    console.log(req, 'test');
     try {
       const user = await prisma.user.findUnique({
         where: {
@@ -30,8 +35,8 @@ passport.use(
     } catch (err) {
       return done(err);
     }
-  }),
-);
+  }
+));
 
 
 var JwtStrategy = require('passport-jwt').Strategy,
@@ -60,21 +65,24 @@ const { validationResult } = require("express-validator");
 var jwt = require('jsonwebtoken');
 
 const authenticateUser = (req, res, next) => {
+  console.log(req.body);
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-   return res.json("Wrong email or password.", errors);
+   return res.json("Wrong email or password * errors not empty.");
   };
 
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
-      return res.json("Wrong email or password.");
+      return res.json("Wrong email or password, * passport failed.");
     }
 
     jwt.sign({ id: user.id, email: user.email }, "secretkey", { expiresIn: "2d" }, (err, token) => {
       if (err) {
         return res.json("Token generation failed");
       }
+
+      console.log('test');
   
       return res.json({
         token,
