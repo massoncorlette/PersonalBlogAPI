@@ -12,7 +12,6 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (event) => {
-    console.log(username);
     event.preventDefault();
     const response = await fetch('http://localhost:5000/', {
         mode: 'cors',
@@ -29,12 +28,31 @@ function Login() {
   return (
     <>
       <div id="loginForm"  >
-        <form onSubmit={handleSubmit} method="POST" id="loginFormInput" autoComplete="off">
+        <form 
+          onSubmit={handleSubmit} 
+          method="POST" 
+          id="loginFormInput" 
+          autoComplete="off"
+        >
           <div className="loginInput">
-            <input onChange={(e) => setUsername(e.target.value)} id="email" name="username" autoComplete="off" placeholder="Enter Email" type="text" />
+            <input 
+             onChange={(e) => setUsername(e.target.value)}
+             id="email" 
+             name="username" 
+             autoComplete="off" 
+             placeholder="Enter Email" 
+             type="text" 
+            />
           </div>
           <div className="loginInput">
-            <input onChange={(e) => setPassword(e.target.value)} id="password" name="password"  autoComplete="new-password" placeholder="Enter Password" type ="password" />
+            <input 
+            onChange={(e) => setPassword(e.target.value)} 
+            id="password" 
+            name="password"  
+            autoComplete="new-password" 
+            placeholder="Enter Password" 
+            type ="password" 
+            />
           </div>
           <div className="formBtns">
             <button type="submit" id="loginBtn">Log In</button>

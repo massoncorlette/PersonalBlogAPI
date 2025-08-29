@@ -4,6 +4,7 @@ const indexRouter = Router();
 
 indexRouter.get("/", async (req, res, next) => {
   res.json("home json log");
+
 });
 
 const {authenticateUser} = require('../config/passport');

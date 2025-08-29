@@ -64,7 +64,6 @@ function validateCreateUser() {
 };
 
 function validateUser() {
-  
   return [
     
     body("username")

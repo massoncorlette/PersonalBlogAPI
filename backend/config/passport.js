@@ -8,11 +8,9 @@ const { prisma } = require('../controllers/viewController');
 passport.use(new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password',
-  passReqToCallback: true,
   session: false
 },
-async function(req, username, password, done) {
-    console.log(req, 'test');
+async function(username, password, done) {
     try {
       const user = await prisma.user.findUnique({
         where: {
@@ -65,12 +63,6 @@ const { validationResult } = require("express-validator");
 var jwt = require('jsonwebtoken');
 
 const authenticateUser = (req, res, next) => {
-  console.log(req.body);
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-   return res.json("Wrong email or password * errors not empty.");
-  };
 
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
@@ -92,7 +84,7 @@ const authenticateUser = (req, res, next) => {
         },
       });
     });
-  });
+  })(req, res, next);
 };
 
 module.exports = { authenticateUser };
