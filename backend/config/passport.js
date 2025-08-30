@@ -73,11 +73,9 @@ const authenticateUser = (req, res, next) => {
       if (err) {
         res.status(500).json({ error: "Something went wrong" });
       }
-
-      console.log('test');
   
       return res.json({
-        token
+        token,
       });
     });
   })(req, res, next);

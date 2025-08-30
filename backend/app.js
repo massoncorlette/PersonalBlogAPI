@@ -51,10 +51,12 @@ app.use(passport.session());  //enables persistent login sessions
 app.use('/', indexRouter);
 app.use('/sign-up', signupRouter);
 
-//app.use((req, res, next) => {
-//  res.locals.currentUser = req.user;
-//  next();
-//});
+app.use((req, res, next) => {
+  console.log(req.user);
+  res.locals.currentUser = req.user;
+  next();
+});
+
 
 app.use('/home', homeRouter);
 app.use('/posts', postsRouter);

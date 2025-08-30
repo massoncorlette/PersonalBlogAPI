@@ -4,6 +4,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
 
 // eslint-disable-next-line react-refresh/only-export-components
 
@@ -11,6 +13,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -37,16 +40,19 @@ function Login() {
     })
     .catch((error) => setError(error))
 
+    // store token locally and navigate to home route where GET request fetch
     const tokenTest = localStorage.getItem('usertoken');
     console.log(tokenTest, 'test');
 
-    // Handle server response (e.g., store token, redirect)
+    navigate("/home"); 
   };
-
-  if (error) return <p>A network error was encountered {error.message}</p>;
 
   return (
     <>
+    {error ? (
+      <p>A network error was encountered: {error.message}</p>
+    ) : null}
+
       <div id="loginForm"  >
         <form 
           onSubmit={handleSubmit} 

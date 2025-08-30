@@ -2,6 +2,12 @@ const { Router } = require("express");
 const homeRouter = Router();
 var jwt = require('jsonwebtoken');
 
+homeRouter.get('/', (req, res ) => {
+
+  // decode JWT here?
+
+})
+
 homeRouter.post('/post', verifyToken, (req, res) => {
   jwt.verify(req.token, 'secretkey', (err, authData) => {
     if(err) {

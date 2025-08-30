@@ -6,7 +6,7 @@ Store generated JWT from server in local storage upon user logging in, remove lo
 Vite and Vitest setup now run:
 npm install
 npm run dev
-npm react-router-dom
+npm install react-router-dom
 
 Two packages that come with react-router-dom:
 1. Loaders fetch data before rendering. (link)
