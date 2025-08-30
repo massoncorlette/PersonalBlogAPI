@@ -66,22 +66,18 @@ const authenticateUser = (req, res, next) => {
 
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
-      return res.json("Wrong email or password, * passport failed.");
+      res.status(401).json({ error: "Wrong email or password" });
     }
 
     jwt.sign({ id: user.id, email: user.email }, "secretkey", { expiresIn: "2d" }, (err, token) => {
       if (err) {
-        return res.json("Token generation failed");
+        res.status(500).json({ error: "Something went wrong" });
       }
 
       console.log('test');
   
       return res.json({
-        token,
-        user: {
-          id: user.id,
-          email: user.email,
-        },
+        token
       });
     });
   })(req, res, next);

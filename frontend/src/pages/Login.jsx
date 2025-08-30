@@ -10,21 +10,41 @@ import { Link } from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch('http://localhost:5000/', {
+    await fetch('http://localhost:5000/', {
         mode: 'cors',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
-    });
-    const data = await response.json();
-    console.log(data);
+    })
+    .then((response) => {
+      if (response.status == 401) {
+        throw new Error("Wrong email or password");
+      }
+
+      if (response.status > 401) {
+        throw new Error("server error");
+      }
+
+      const data = response.json();
+      console.log(data);
+      localStorage.setItem('usertoken', data.token);
+    })
+    .catch((error) => setError(error))
+
+    const tokenTest = localStorage.getItem('usertoken');
+    console.log(tokenTest, 'test');
+
     // Handle server response (e.g., store token, redirect)
   };
+
+  if (error) return <p>A network error was encountered {error.message}</p>;
+
   return (
     <>
       <div id="loginForm"  >
