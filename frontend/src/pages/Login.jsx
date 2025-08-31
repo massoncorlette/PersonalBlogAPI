@@ -29,27 +29,29 @@ function Login() {
     })
     .then(async (response) => {
       if (response.status == 401) {
-        throw new Error("Wrong email or password");
+        setError('Wrong email or password');
+        return;
       }
 
       if (response.status > 401) {
-        throw new Error("server error");
+        setError("server error");
+        return;
       }
     // store token locally and navigate to home route where GET request fetch
       const data = await response.json();
+      console.log(data);
       localStorage.setItem('usertoken', data.token);
     })
     .catch((error) => setError(error))
 
-    if (error !== null) {
-      navigate("/home"); 
-    }
+    console.log(error);
+
   };
 
   return (
     <>
     {error ? (
-      <p>A network error was encountered: {error.message}</p>
+      <p>A network error was encountered: {error}</p>
     ) : null}
 
       <div id="loginForm"  >

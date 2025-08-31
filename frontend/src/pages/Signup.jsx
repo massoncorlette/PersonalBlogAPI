@@ -38,14 +38,11 @@ function SignUp() {
 
       const data = await response.json();
       console.log(data);
+      navigate("/"); 
     })
     .catch((error) => setError(error))
     .catch((errors) => setError(errors))
 
-    // store token locally and navigate to home route where GET request fetch
-    if (error !== null) {
-      navigate("/"); 
-    }
   };
 
   //handler function for user info
