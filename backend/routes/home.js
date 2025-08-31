@@ -1,41 +1,22 @@
 const { Router } = require("express");
 const homeRouter = Router();
 var jwt = require('jsonwebtoken');
+const jwtDecode = require("jwt-decode");
+const { verifyToken } = require("../middlewares/mainware");
+const passport = require('passport');
+require('../config/passport');
 
-homeRouter.get('/', (req, res ) => {
+homeRouter.get('/', passport.authenticate('jwt', { session: false }), (req, res ) => {
 
-  // decode JWT here?
+  res.json({ message: 'Access granted!', user: req.user });
 
-})
 
-homeRouter.post('/post', verifyToken, (req, res) => {
-  jwt.verify(req.token, 'secretkey', (err, authData) => {
-    if(err) {
-      res.sendStatus(403);
-    } else {
-      res.json('Post Created'
-      )
-    }
-  });
 });
 
-// middleware to verify token on protected routes
-function verifyToken(req, res, next) {
- // Get auth header value
- const bearerHeader = req.headers['authorization'];
-
- if(typeof bearerHeader !== 'undefined') {
-
-  const bearer = bearerHeader.split(' ');
-
-    const bearerToken = bearer[1];
-
-    req.token = bearerToken;
+homeRouter.post('/post', verifyToken, passport.authenticate('jwt', { session: false }), (req, res) => {
   
-    next();
- } else {
-  res.sendStatus(403);
- }
-}
+
+});
+
 
 module.exports = {homeRouter, verifyToken}

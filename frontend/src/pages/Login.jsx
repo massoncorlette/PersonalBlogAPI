@@ -25,7 +25,7 @@ function Login() {
         },
         body: JSON.stringify({ username, password }),
     })
-    .then((response) => {
+    .then(async (response) => {
       if (response.status == 401) {
         throw new Error("Wrong email or password");
       }
@@ -34,16 +34,12 @@ function Login() {
         throw new Error("server error");
       }
 
-      const data = response.json();
-      console.log(data);
+      const data = await response.json();
       localStorage.setItem('usertoken', data.token);
     })
     .catch((error) => setError(error))
 
     // store token locally and navigate to home route where GET request fetch
-    const tokenTest = localStorage.getItem('usertoken');
-    console.log(tokenTest, 'test');
-
     navigate("/home"); 
   };
 

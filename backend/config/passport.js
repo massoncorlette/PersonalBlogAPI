@@ -43,20 +43,23 @@ var opts = {}
 // include token in bearer schema on client side for protected routes
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = 'secretkey';
+passport.use(
+  new JwtStrategy(opts, async function (jwt_payload, done) {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: jwt_payload.id },
+      });
 
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    User.findOne({id: jwt_payload.sub}, function(err, user) {
-        if (err) {
-            return done(err, false);
-        }
-        if (user) {
-            return done(null, user);
-        } else {
-            return done(null, false);
-            // or you could create a new account
-        }
-    });
-}));
+      if (user) {
+        return done(null, user);
+      } else {
+        return done(null, false);
+      }
+    } catch (err) {
+      return done(err, false);
+    }
+  })
+);
 
 
 const { validationResult } = require("express-validator");
@@ -69,7 +72,7 @@ const authenticateUser = (req, res, next) => {
       res.status(401).json({ error: "Wrong email or password" });
     }
 
-    jwt.sign({ id: user.id, email: user.email }, "secretkey", { expiresIn: "2d" }, (err, token) => {
+    jwt.sign({ id: user.id, username: user.username }, "secretkey", { expiresIn: "2d" }, (err, token) => {
       if (err) {
         res.status(500).json({ error: "Something went wrong" });
       }

@@ -29,6 +29,7 @@ Commands in BACKEND directory!
 npm init - sets up default package.json file (must run!)
 npm install - sets up all node modules (must run!)
 npm install cors (run)
+npm install jwt-decode
 
 npm install express express-session jsonwebtoken pg passport passport-jwt passport-local bcryptjs ejs express-validator dotenv connect-pg-simple -- install all in one go
 

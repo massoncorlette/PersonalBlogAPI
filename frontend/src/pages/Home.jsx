@@ -12,11 +12,19 @@ function Home() {
   const [user, setUser] = useState(null);
  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const token = localStorage.getItem('usertoken');
+  console.log(token, "tested");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/home'); // Example API
+        const response = await fetch('http://localhost:5000/home', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json', 
+          },
+        });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -29,7 +37,15 @@ function Home() {
     };
 
     fetchData();
-  }, []);
+  }, [token]);  // token dependency?
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
