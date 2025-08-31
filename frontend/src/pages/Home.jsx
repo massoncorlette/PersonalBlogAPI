@@ -49,7 +49,7 @@ function Home() {
 
   return (
     <div>
-    <h1>Hello from home page!</h1>
+    <h1>Welcome home {user.alias} </h1>
 
     {name === "home" ? (
       <HomePage user={user}/>

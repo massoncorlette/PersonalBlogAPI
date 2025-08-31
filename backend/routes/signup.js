@@ -4,8 +4,6 @@ const { validateCreateUser } = require("../controllers/validation");
 
 const signupRouter = Router();
 
-signupRouter.get("/", (req, res) => res.render("signup"));
-
 signupRouter.post("/", validateCreateUser(),  handleCreateUser);
 
 

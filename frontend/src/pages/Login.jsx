@@ -2,9 +2,8 @@
 /* import { useState, useEffect } from 'react' */
 /*maybe import local styles */
 import { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
 
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -14,6 +13,9 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  
+  //JWT removed from local storage upon mount (redirect to login page)
+  localStorage.removeItem('usertoken');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,14 +35,15 @@ function Login() {
       if (response.status > 401) {
         throw new Error("server error");
       }
-
+    // store token locally and navigate to home route where GET request fetch
       const data = await response.json();
       localStorage.setItem('usertoken', data.token);
     })
     .catch((error) => setError(error))
 
-    // store token locally and navigate to home route where GET request fetch
-    navigate("/home"); 
+    if (error !== null) {
+      navigate("/home"); 
+    }
   };
 
   return (

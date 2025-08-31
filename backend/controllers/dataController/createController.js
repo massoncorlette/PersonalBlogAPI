@@ -17,9 +17,7 @@ async function handleCreateComment(req, res, next) {
 async function handleCreateUser(req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).render("signup", {
-      errors: errors.array(),
-    });
+    return res.status(400).json({ errors: errors.array() });
   }
   // REPLACE FOR TOKEN AUTHURIZATION
   try {

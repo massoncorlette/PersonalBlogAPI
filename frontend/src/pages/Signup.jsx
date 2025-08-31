@@ -1,14 +1,79 @@
 
 {/* import { useState, useEffect } from 'react' */}
 {/*maybe import local styles */}
-
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const [user, setUser] = useState({
+    fname: '',
+    lname: '',
+    alias: '',
+    email: '',
+    password: '',
+  });
+  const [error, setError] = useState(null);
+  
+  const navigate = useNavigate();
+
+  //validate and sanitize for user exp frontend, deep validation backend
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await fetch('http://localhost:5000/sign-up', {
+        mode: 'cors',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user }),
+    })
+    .then(async (response) => {
+      if (response.status == 401) {
+        throw new Error("Wrong email or password");
+      }
+
+      if (response.status > 401) {
+        throw new Error("server error");
+      }
+
+      const data = await response.json();
+      console.log(data);
+    })
+    .catch((error) => setError(error))
+    .catch((errors) => setError(errors))
+
+    // store token locally and navigate to home route where GET request fetch
+    if (error !== null) {
+      navigate("/"); 
+    }
+  };
+
+  //handler function for user info
+  const updateInfo = (value, propType) => {
+
+    const changeUser = {...user, [propType]:value};
+
+    setUser(changeUser);
+  };
+
 
   return (
     <>
-      <form action="/sign-up" method="POST" id="signupForm" autoComplete="off">
+    {error ? (
+      <ul>
+        {error.map((err, index) => (
+          <li key={index}>{err.msg}</li>
+        ))}
+      </ul>
+    ) : null}
+        
+    <div id="signupForm">
+      <form 
+        onSubmit={handleSubmit} 
+        method="POST" 
+        id="signupForm" 
+        autoComplete="off"
+      >
         <div className="signupField">
           <input
             id="firstname"
@@ -17,6 +82,7 @@ function SignUp() {
             autoComplete="off"
             placeholder="First Name"
             type="text"
+            onChange={(event) => updateInfo(event.target.value, "fname")}
           />
         </div>
 
@@ -28,6 +94,7 @@ function SignUp() {
             autoComplete="off"
             placeholder="Last Name"
             type="text"
+            onChange={(event) => updateInfo(event.target.value, "lname")}
           />
         </div>
 
@@ -39,6 +106,7 @@ function SignUp() {
             autoComplete="off"
             placeholder="Email"
             type="email"
+            onChange={(event) => updateInfo(event.target.value, "email")}
           />
         </div>
 
@@ -50,6 +118,7 @@ function SignUp() {
             autoComplete="off"
             placeholder="Username"
             type="text"
+            onChange={(event) => updateInfo(event.target.value, "alias")}
           />
         </div>
 
@@ -60,6 +129,7 @@ function SignUp() {
             name="password"
             type="password"
             placeholder="Password"
+            onChange={(event) => updateInfo(event.target.value, "password")}
           />
         </div>
 
@@ -80,8 +150,8 @@ function SignUp() {
           </Link>
         </div>
       </form>
- 
-    </>
+    </div>
+   </>
   )
 }
 
