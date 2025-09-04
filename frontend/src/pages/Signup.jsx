@@ -25,24 +25,28 @@ function SignUp() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ user }),
+        body: JSON.stringify({
+          firstname: user.fname,
+          lastname: user.lname,
+          alias: user.alias,
+          username: user.email,
+          password: user.password
+        }),
     })
     .then(async (response) => {
-      if (response.status == 401) {
-        throw new Error("Wrong email or password");
-      }
-
-      if (response.status > 401) {
-        throw new Error("server error");
-      }
 
       const data = await response.json();
       console.log(data);
-      navigate("/"); 
-    })
-    .catch((error) => setError(error))
-    .catch((errors) => setError(errors))
 
+      if (!response.ok) {
+        console.log(data.errors); 
+        setError(data.errors);
+        return;
+      }
+      if (response.status !== 400) {
+        navigate("/"); 
+      }
+    })
   };
 
   //handler function for user info

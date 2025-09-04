@@ -28,6 +28,16 @@ function Login() {
         body: JSON.stringify({ username, password }),
     })
     .then(async (response) => {
+
+      const data = await response.json();
+    
+      console.log(data.error, 'errors');
+
+      if (data.error) {
+        setError(response.error[0].msg);
+        return;
+      }
+
       if (response.status == 401) {
         setError('Wrong email or password');
         return;
@@ -38,13 +48,8 @@ function Login() {
         return;
       }
     // store token locally and navigate to home route where GET request fetch
-      const data = await response.json();
-      console.log(data);
       localStorage.setItem('usertoken', data.token);
     })
-    .catch((error) => setError(error))
-
-    console.log(error);
 
   };
 

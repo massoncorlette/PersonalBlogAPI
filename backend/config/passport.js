@@ -68,7 +68,7 @@ var jwt = require('jsonwebtoken');
 const authenticateUser = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ error: errors.errors });
   }
   
   passport.authenticate("local", { session: false }, (err, user, info) => {
