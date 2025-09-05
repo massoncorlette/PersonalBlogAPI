@@ -4,17 +4,21 @@
 import CreatePost from "../components/admin/CreatePost";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PostPreview from "../components/PostPreview";
 
-function HomePage( user ) {
+function HomePage( data ) {
   
-  if (!user) return <p>Loading...</p>;
+  if (!data) return <p>Loading...</p>;
 
-  if (user.user.admin) {
+  if (data.user.admin) {
     return (
       <>
         <Navbar />
-        <div>Welcome, {user.user.alias} as admin!</div>
-        <CreatePost user={user} />
+        <div>Welcome, {data.user.alias} as admin!</div>
+        <CreatePost user={data} />
+        <div id="postsPreviewContainer">
+          <PostPreview posts={data.posts} />
+        </div>
         <Footer />
       </>
     );
@@ -23,7 +27,10 @@ function HomePage( user ) {
   return (
     <>
       <Navbar />
-        <div>Welcome home, <i>{user.user.alias}</i> </div>
+        <div>Welcome home, <i>{data.user.alias}</i> </div>
+        <div id="postsPreviewContainer">
+          <PostPreview posts={data.posts} />
+        </div>
       <Footer />
     </>
   );

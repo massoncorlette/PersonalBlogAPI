@@ -8,9 +8,9 @@ import SignUp from "./Signup";
 function Home() {
   const { name } = useParams();
 
-  const [user, setUser] = useState(null);
+  const [user, SetUser] = useState(null);
+  const [posts, SetPosts] = useState(null);
  // const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState(null);
   const [error, setError] = useState(null);
   const token = localStorage.getItem('usertoken');
   console.log(token, "tested");
@@ -29,8 +29,9 @@ function Home() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const result = await response.json();
-        console.log(result);
-        setUser(result);
+        
+        SetUser(result.user);
+        SetPosts(result.posts)
       } catch (error) {
         setError(error);
       } 
@@ -50,7 +51,7 @@ function Home() {
   return (
     <>
       {name === "home" ? (
-        <HomePage user={user}/>
+        <HomePage user={user} posts={posts}/>
       ) : name === "sign-up" ? (
         <SignUp />
       ) : (

@@ -13,10 +13,12 @@ homeRouter.get('/', passport.authenticate('jwt', { session: false }), async (req
 
   // req.user from passport callback authentication
   res.json({
-    alias: req.user.alias,
-    first: req.user.fname,
-    last: req.user.lname,
-    admin: req.user.is_admin,
+    user: {
+      alias: req.user.alias,
+      first: req.user.fname,
+      last: req.user.lname,
+      admin: req.user.is_admin
+    },
     posts: posts
   });
 });
