@@ -10,12 +10,13 @@ function Home() {
 
   const [user, setUser] = useState(null);
  // const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState(null);
   const [error, setError] = useState(null);
   const token = localStorage.getItem('usertoken');
   console.log(token, "tested");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUser = async () => {
       try {
         const response = await fetch('http://localhost:5000/home', {
           method: 'GET',
@@ -35,7 +36,7 @@ function Home() {
       } 
     };
 
-    fetchData();
+    fetchUser();
   }, [token]);  // token dependency?
 
   if (error) {
@@ -47,17 +48,17 @@ function Home() {
   }
 
   return (
-    <div>
-    <h1>Welcome home {user.alias} </h1>
+    <>
+      {name === "home" ? (
+        <HomePage user={user}/>
+      ) : name === "sign-up" ? (
+        <SignUp />
+      ) : (
+        <Login />
+      )}    
+    </>
 
-    {name === "home" ? (
-      <HomePage user={user}/>
-    ) : name === "sign-up" ? (
-      <SignUp />
-    ) : (
-      <Login />
-    )}
-  </div>
+
   )
 }
 

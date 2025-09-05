@@ -1,0 +1,46 @@
+.formContainer {
+  max-width: 400px;
+  margin: 80px auto;        
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.loginInput  {
+  display: flex;
+}
+
+.formInput {
+  flex: 1;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.formInput:focus {
+  border-color: #4f46e5;     
+  box-shadow: 0 0 6px rgba(79, 70, 229, 0.3);
+}
+
+
+
+::placeholder {
+  color: #aaa;
+  font-size: 0.95rem;
+}
+
+.formLink {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #4f46e5;
+  text-decoration: none;
+}
+

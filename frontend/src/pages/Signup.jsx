@@ -3,6 +3,7 @@
 {/*maybe import local styles */}
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import styles from '../styles/Indexform.module.css';
 
 function SignUp() {
   const [user, setUser] = useState({
@@ -70,7 +71,7 @@ function SignUp() {
       </ul>
     ) : null}
         
-    <div id="signupForm">
+    <div  className={styles.formContainer}>
       <form 
         onSubmit={handleSubmit} 
         method="POST" 
@@ -80,7 +81,7 @@ function SignUp() {
         <div className="signupField">
           <input
             id="firstname"
-            className="signupInput"
+            className={styles.formInput}
             name="firstname"
             autoComplete="off"
             placeholder="First Name"
@@ -92,7 +93,7 @@ function SignUp() {
         <div className="signupField">
           <input
             id="lastname"
-            className="signupInput"
+            className={styles.formInput}
             name="lastname"
             autoComplete="off"
             placeholder="Last Name"
@@ -104,7 +105,7 @@ function SignUp() {
         <div className="signupField">
           <input
             id="email"
-            className="signupInput"
+            className={styles.formInput}
             name="username"
             autoComplete="off"
             placeholder="Email"
@@ -116,7 +117,7 @@ function SignUp() {
         <div className="signupField">
           <input
             id="alias"
-            className="signupInput"
+            className={styles.formInput}
             name="alias"
             autoComplete="off"
             placeholder="Username"
@@ -128,7 +129,7 @@ function SignUp() {
         <div className="signupField">
           <input
             id="password"
-            className="signupInput"
+            className={styles.formInput}
             name="password"
             type="password"
             placeholder="Password"
@@ -139,7 +140,7 @@ function SignUp() {
         <div className="signupField">
           <input
             id="passwordconfirm"
-            className="signupInput"
+            className={styles.formInput}
             name="passwordconfirm"
             type="password"
             placeholder="Repeat Password"

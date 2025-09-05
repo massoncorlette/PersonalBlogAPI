@@ -2,23 +2,31 @@
 {/* import { useState, useEffect } from 'react' */}
 {/*maybe import local styles */}
 import CreatePost from "../components/admin/CreatePost";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function HomePage( user ) {
-  console.log(user);
+  
   if (!user) return <p>Loading...</p>;
 
-  if (user.user.admin == true) {
+  if (user.user.admin) {
     return (
       <>
-      <h1>Welcome, {user.first} admin!</h1>
-      
-      <CreatePost user={user}/>
+        <Navbar />
+        <div>Welcome, {user.user.alias} as admin!</div>
+        <CreatePost user={user} />
+        <Footer />
       </>
-
-    ) 
-
+    );
   }
 
+  return (
+    <>
+      <Navbar />
+        <div>Welcome home, <i>{user.user.alias}</i> </div>
+      <Footer />
+    </>
+  );
 }
 
 export default HomePage;

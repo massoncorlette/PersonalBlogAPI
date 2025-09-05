@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from '../../styles/Component.module.css';
+import styles from '../../styles/Createform.module.css';
 
 function CreatePost({ user }) {
   const [title, setTitle] = useState("");
@@ -45,7 +45,7 @@ function CreatePost({ user }) {
 
       <form  className={styles.form} 
       onSubmit={handleSubmit}>
-        <div>
+        <div className={styles.formInput}>
           <input
             className={styles.input}
             id="title"
@@ -57,7 +57,7 @@ function CreatePost({ user }) {
           />
         </div>
 
-        <div>
+        <div className={styles.formTextarea}>
           <textarea
             className={styles.textarea}
             id="content"

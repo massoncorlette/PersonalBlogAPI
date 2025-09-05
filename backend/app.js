@@ -52,6 +52,16 @@ app.use('/', indexRouter);
 app.use('/sign-up', signupRouter);
 
 app.use('/home', homeRouter);
+
+app.post("/log-out", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(400);
+    } 
+    res.status(200).json({ message: "Logged out successfully" });
+  });
+});
+
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 

@@ -1,8 +1,7 @@
 
-/* import { useState, useEffect } from 'react' */
-/*maybe import local styles */
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import styles from '../styles/Indexform.module.css';
 
 
 
@@ -61,15 +60,16 @@ function Login() {
       <p>A network error was encountered: {error}</p>
     ) : null}
 
-      <div id="loginForm"  >
+      <div className={styles.formContainer}  >
         <form 
           onSubmit={handleSubmit} 
           method="POST" 
           id="loginFormInput" 
           autoComplete="off"
         >
-          <div className="loginInput">
+          <div className={styles.loginInput}>
             <input 
+             className={styles.formInput}
              onChange={(e) => setUsername(e.target.value)}
              id="email" 
              name="username" 
@@ -78,8 +78,9 @@ function Login() {
              type="text" 
             />
           </div>
-          <div className="loginInput">
+          <div className={styles.loginInput}>
             <input 
+            className={styles.formInput}
             onChange={(e) => setPassword(e.target.value)} 
             id="password" 
             name="password"  
@@ -93,7 +94,7 @@ function Login() {
           </div>
         </form>
           <div className="formBtns" id="signUp">
-            <div >
+            <div className={styles.formLink} >
               Not a member? 
             </div>
             <Link to="/sign-up">
