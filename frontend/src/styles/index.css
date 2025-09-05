@@ -1,5 +1,7 @@
 /* global styles here imported in main.jsx */
 
+* {border: solid rgba(255, 0, 0, 0.692) 1px;}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

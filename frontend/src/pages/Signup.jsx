@@ -11,6 +11,7 @@ function SignUp() {
     alias: '',
     email: '',
     password: '',
+    passwordconfirm: ''
   });
   const [error, setError] = useState(null);
   
@@ -30,7 +31,8 @@ function SignUp() {
           lastname: user.lname,
           alias: user.alias,
           username: user.email,
-          password: user.password
+          password: user.password,
+          passwordconfirm: user.passwordconfirm
         }),
     })
     .then(async (response) => {
@@ -141,6 +143,7 @@ function SignUp() {
             name="passwordconfirm"
             type="password"
             placeholder="Repeat Password"
+            onChange={(event) => updateInfo(event.target.value, "passwordconfirm")}
           />
         </div>
 

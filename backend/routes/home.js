@@ -3,6 +3,7 @@ const homeRouter = Router();
 var jwt = require('jsonwebtoken');
 const jwtDecode = require("jwt-decode");
 const passport = require('passport');
+const { handleCreatePost } = require("../controllers/dataController/createController");
 require('../config/passport');
 
 homeRouter.get('/', passport.authenticate('jwt', { session: false }), (req, res ) => {
@@ -12,11 +13,13 @@ homeRouter.get('/', passport.authenticate('jwt', { session: false }), (req, res 
     alias: req.user.alias,
     first: req.user.fname,
     last: req.user.lname,
+    admin: req.user.is_admin
   });
 });
 
-homeRouter.post('/post', passport.authenticate('jwt', { session: false }), (req, res) => {
+homeRouter.post('/posts', passport.authenticate('jwt', { session: false }), (req, res) => {
   
+  handleCreatePost(req, res);
 
 });
 

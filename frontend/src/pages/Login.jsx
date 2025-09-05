@@ -31,10 +31,8 @@ function Login() {
 
       const data = await response.json();
     
-      console.log(data.error, 'errors');
-
       if (data.error) {
-        setError(response.error[0].msg);
+        setError(data.error);
         return;
       }
 
@@ -49,6 +47,10 @@ function Login() {
       }
     // store token locally and navigate to home route where GET request fetch
       localStorage.setItem('usertoken', data.token);
+
+      if (!data.error) {
+        navigate("/home");
+      }
     })
 
   };

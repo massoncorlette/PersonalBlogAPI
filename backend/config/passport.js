@@ -66,19 +66,15 @@ const { validationResult } = require("express-validator");
 var jwt = require('jsonwebtoken');
 
 const authenticateUser = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ error: errors.errors });
-  }
-  
+
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
-      res.status(401).json({ error: "Wrong email or password" });
+      return res.status(401).json({ error: "Wrong email or password" });
     }
 
     jwt.sign({ id: user.id, username: user.username }, "secretkey", { expiresIn: "2d" }, (err, token) => {
       if (err) {
-        res.status(500).json({ error: "Something went wrong" });
+        return res.status(500).json({ error: "Something went wrong" });
       }
   
       return res.json({

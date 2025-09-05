@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import Login from "./Login";
 import HomePage from "./HomePage";
 import SignUp from "./Signup";
-import '../styles/App.css'
 
 function Home() {
   const { name } = useParams();
