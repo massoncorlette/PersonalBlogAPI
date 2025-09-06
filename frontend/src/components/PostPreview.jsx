@@ -1,22 +1,43 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
-function PostPreview(posts) {
+// eslint-disable-next-line react/prop-types
+function PostPreview({posts, setPost}) {
 
-  console.log(posts.posts.length, 'test', posts)
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleNavigate = async (postId, event) => {
+    event.preventDefault();
+
+    const response = await fetch(`http://localhost:5000/posts/${postId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json', 
+      },
+    });
+    if (!response.ok) {
+      setError("server error");
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }  
+
+    if (!error) {
+      setPost(postId);
+    }
+
+  }
 
   return (
     <>
-  {posts.posts.length > 0 && posts.posts.map((post, index) => (
-    <div key={post.id}> 
-      <div>{post.title}</div>
-      <div>{post.createdAt}</div>
+  {posts.map((post, index) => (
+    <div key={post.id} className='postPreview'> 
+      <button onClick={(e) => handleNavigate(post.id, e)} >
+        <div>{post.title}</div>
+        <div>{post.createdAt}</div>
+      </button>
     </div>
   ))}
 
-  
-
-    
     </>
   )
 };

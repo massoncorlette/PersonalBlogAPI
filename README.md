@@ -15,6 +15,7 @@ ToDo:
   - Setup fetch components w/ vanilla fetch
   - console.log data for now
   - Look into React fetch data documentation
+  - !!Give clear error feedback for non admin users CRUD Posts/Comments on protected routes
 
 
 ---Template Notes---

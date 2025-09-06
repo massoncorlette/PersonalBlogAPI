@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import ErrorPage from "./components/ErrorPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import HomePage from "./pages/HomePage";
 
 const routes = [
   {
@@ -19,8 +20,8 @@ const routes = [
         element: <Signup />,
       },
       {
-        path: ":name",
-        element: <Home />,
+        path: "home",
+        element: <Home/>
       },
     ]
   },

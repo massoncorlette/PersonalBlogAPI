@@ -2,7 +2,6 @@
 
 Store generated JWT from server in local storage upon user logging in, remove localstorage upon logging out. 
 
-
 Vite and Vitest setup now run:
 npm install
 npm run dev

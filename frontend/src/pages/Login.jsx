@@ -51,7 +51,6 @@ function Login() {
         navigate("/home");
       }
     })
-
   };
 
   return (
