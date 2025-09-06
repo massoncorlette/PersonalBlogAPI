@@ -3,7 +3,6 @@ const homeRouter = Router();
 var jwt = require('jsonwebtoken');
 const jwtDecode = require("jwt-decode");
 const passport = require('passport');
-const { handleCreatePost } = require("../controllers/dataController/createController");
 const { getAllPosts } = require('../controllers/viewController');
 require('../config/passport');
 
@@ -24,11 +23,6 @@ homeRouter.get('/', passport.authenticate('jwt', { session: false }), async (req
 });
 
 
-homeRouter.post('/posts', passport.authenticate('jwt', { session: false }), (req, res) => {
-  
-  handleCreatePost(req, res);
-
-});
 
 
 module.exports = {homeRouter}

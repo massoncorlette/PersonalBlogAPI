@@ -10,8 +10,6 @@ import PostDetails from "../components/PostDetails";
 function HomePage( data ) {
 
   const [postid, SetPost] = useState(null);
-
-  console.log(data);
   
   if (!data) return <p>Loading...</p>;
 
@@ -19,7 +17,7 @@ function HomePage( data ) {
     return (
       <>
        <Navbar />
-        <PostDetails/>
+        <PostDetails postdata={data.posts} postid={postid}/>
       <Footer/>
       </>
     )
