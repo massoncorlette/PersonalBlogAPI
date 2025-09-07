@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styles from '../../styles/Createform.module.css';
 
-function CreatePost({ user }) {
+// eslint-disable-next-line react/prop-types
+function CreatePost({setLoading, SetNewFetch, SetSuccess}) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState(null);
@@ -28,6 +29,12 @@ function CreatePost({ user }) {
       if (!response.ok) {
         setError("Failed to create post");
         return;
+      }
+
+      if (response.ok) {
+        SetNewFetch(true);
+        setLoading(true);
+        SetSuccess(true);
       }
 
     } catch (err) {

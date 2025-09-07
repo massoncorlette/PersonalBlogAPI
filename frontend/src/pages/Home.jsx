@@ -4,12 +4,11 @@ import { useEffect, useState } from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-
 function Home() {
-  const { name } = useParams();
 
   const [user, SetUser] = useState(null);
   const [posts, SetPosts] = useState(null);
+  const [fetched, SetNewFetch] = useState(false);
  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem('usertoken');
@@ -31,14 +30,15 @@ function Home() {
         const result = await response.json();
         
         SetUser(result.user);
-        SetPosts(result.posts)
+        SetPosts(result.posts);
+        // reset boolean fetch after updated posts fetch
+        SetNewFetch(false);
       } catch (error) {
         setError(error);
       } 
     };
-
     fetchUser();
-  }, [token]);  // token dependency?
+  }, [token, fetched]);  // token dependency?
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -51,7 +51,7 @@ function Home() {
   return (
     <>
     <Navbar/>
-      <Outlet context={{user, posts}} />
+      <Outlet context={{user, posts, SetNewFetch}} />
     <Footer/>
     </>
 

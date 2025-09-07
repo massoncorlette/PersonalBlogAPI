@@ -7,6 +7,8 @@ function PostPreview({posts}) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // eslint-disable-next-line react/prop-types
+
   const handleNavigate = async (postId, event) => {
     event.preventDefault();
 

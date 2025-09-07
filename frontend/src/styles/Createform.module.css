@@ -13,6 +13,16 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+.postDetailsContainer {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
 .title {
   color: #333;
   font-size: 1.5rem;

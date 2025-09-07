@@ -9,6 +9,7 @@ require('../config/passport');
 homeRouter.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next ) => {
 
   const posts = await getAllPosts(req, res, next);
+  const orderedPosts = [...posts].reverse();
 
   // req.user from passport callback authentication
   res.json({
@@ -18,7 +19,7 @@ homeRouter.get('/', passport.authenticate('jwt', { session: false }), async (req
       last: req.user.lname,
       admin: req.user.is_admin
     },
-    posts: posts
+    posts: orderedPosts
   });
 });
 

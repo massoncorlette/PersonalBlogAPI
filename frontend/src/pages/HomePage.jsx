@@ -6,18 +6,22 @@ import CreatePost from "../components/admin/CreatePost";
 import PostPreview from "../components/PostPreview";
 
 function HomePage() {
-  const { user, posts } = useOutletContext();
+  const { user, posts, SetNewFetch } = useOutletContext();
 
   const [loading, setLoading] = useState(true);
+  const [success, SetSuccess] = useState(false);
 
-  //spinner upon mount with delay
+  //spinner upon mount with delay, post creation message with delay
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
 
-    return () => clearTimeout(timer); 
-  } ,[]);
+    const successTimer = setTimeout(() => {
+      SetSuccess(false);
+    }, 5000);
+    return () => clearTimeout(timer, successTimer); 
+  } ,[loading]);
 
   if (loading) {
     return (
@@ -31,7 +35,12 @@ function HomePage() {
     return (
       <>
         <div>Welcome, {user.alias} as admin!</div>
-        <CreatePost user={user} />
+
+        {success ? (
+         <p>Post Created Succesfully!</p>
+        ) : null}
+
+        <CreatePost setLoading={setLoading} SetNewFetch={SetNewFetch} SetSuccess={SetSuccess}/>
         <div id="postsPreviewContainer">
           <PostPreview posts={posts}/>
         </div>
@@ -41,12 +50,10 @@ function HomePage() {
 
   return (
     <>
-      <Navbar />
-        <div>Welcome home, <i>{user.alias}</i> </div>
-        <div id="postsPreviewContainer">
-          <PostPreview posts={posts}/>
-        </div>
-      <Footer />
+      <div>Welcome home, <i>{user.alias}</i> </div>
+      <div id="postsPreviewContainer">
+        <PostPreview posts={posts}/>
+      </div>
     </>
   )
 }

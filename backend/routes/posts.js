@@ -8,6 +8,7 @@ const postsRouter = Router();
 
 postsRouter.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   handleCreatePost(req, res);
+  return res.status(201).json({ msg: "Post succesfully made." });
 });
 
 postsRouter.get('/:postId', async (req, res, next ) => {
