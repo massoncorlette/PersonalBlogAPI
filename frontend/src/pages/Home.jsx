@@ -1,7 +1,8 @@
 {/* import { useState, useEffect } from 'react' */}
 import { useParams, Outlet } from "react-router-dom";
 import { useEffect, useState } from 'react';
-import HomePage from "./HomePage";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 
 function Home() {
@@ -49,7 +50,9 @@ function Home() {
 
   return (
     <>
+    <Navbar/>
       <Outlet context={{user, posts}} />
+    <Footer/>
     </>
 
 

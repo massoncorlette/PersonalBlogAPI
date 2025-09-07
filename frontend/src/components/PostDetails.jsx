@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
@@ -8,18 +8,18 @@ function PostDetails() {
 
   const [post, SetPostDetails] = useState(null);
 
-  if (!posts) {
-    return <p>No data received.</p>;
-  }
-
-  console.log(posts);
-
-  // eslint-disable-next-line react/prop-types
-  posts.forEach(element => {
+  useEffect(() => {
+    posts.forEach(element => {
       if (element.id == postId) {
         SetPostDetails(element);
       }
-  });
+    });
+  }, [posts, postId]);
+
+
+  if (!posts) {
+    return <p>No data received.</p>;
+  }
 
   return (
     <>

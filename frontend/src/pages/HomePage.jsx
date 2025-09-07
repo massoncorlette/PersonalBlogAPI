@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { useOutletContext } from "react-router-dom";
 {/*maybe import local styles */}
 import CreatePost from "../components/admin/CreatePost";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import PostPreview from "../components/PostPreview";
 
 function HomePage() {
@@ -32,13 +30,11 @@ function HomePage() {
   if (user.admin) {
     return (
       <>
-        <Navbar />
         <div>Welcome, {user.alias} as admin!</div>
         <CreatePost user={user} />
         <div id="postsPreviewContainer">
           <PostPreview posts={posts}/>
         </div>
-        <Footer />
       </>
     );
   }
