@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-function PostPreview({posts, setPost}) {
+function PostPreview({posts}) {
 
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function PostPreview({posts, setPost}) {
 
 
     if (!error) {
-      console.log(result, "post");
+      navigate(`/home/post/${result.post.id}`,{ state: { posts: posts, postId:postId } }) ;
     }
 
   }

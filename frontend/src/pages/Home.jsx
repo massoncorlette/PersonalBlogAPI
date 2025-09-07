@@ -1,9 +1,8 @@
 {/* import { useState, useEffect } from 'react' */}
 import { useParams, Outlet } from "react-router-dom";
 import { useEffect, useState } from 'react';
-import Login from "./Login";
 import HomePage from "./HomePage";
-import SignUp from "./Signup";
+
 
 function Home() {
   const { name } = useParams();
@@ -50,7 +49,7 @@ function Home() {
 
   return (
     <>
-      <HomePage user={user} posts={posts}/>
+      <Outlet context={{user, posts}} />
     </>
 
 

@@ -1,36 +1,42 @@
 
 import { useEffect, useState } from 'react';
+import { useOutletContext } from "react-router-dom";
 {/*maybe import local styles */}
 import CreatePost from "../components/admin/CreatePost";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PostPreview from "../components/PostPreview";
-import PostDetails from "../components/PostDetails";
 
-function HomePage( data ) {
+function HomePage() {
+  const { user, posts } = useOutletContext();
 
-  const [postid, SetPost] = useState(null);
-  
-  if (!data) return <p>Loading...</p>;
+  const [loading, setLoading] = useState(true);
 
-  if (postid) {
+  //spinner upon mount with delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer); 
+  } ,[]);
+
+  if (loading) {
     return (
-      <>
-       <Navbar />
-        <PostDetails postdata={data.posts} postid={postid}/>
-      <Footer/>
-      </>
-    )
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}>
+        <div className="spinner"></div>
+      </div>
+    );
   }
-
-  if (data.user.admin) {
+  
+  if (user.admin) {
     return (
       <>
         <Navbar />
-        <div>Welcome, {data.user.alias} as admin!</div>
-        <CreatePost user={data} />
+        <div>Welcome, {user.alias} as admin!</div>
+        <CreatePost user={user} />
         <div id="postsPreviewContainer">
-          <PostPreview posts={data.posts} setPost={SetPost}/>
+          <PostPreview posts={posts}/>
         </div>
         <Footer />
       </>
@@ -40,9 +46,9 @@ function HomePage( data ) {
   return (
     <>
       <Navbar />
-        <div>Welcome home, <i>{data.user.alias}</i> </div>
+        <div>Welcome home, <i>{user.alias}</i> </div>
         <div id="postsPreviewContainer">
-          <PostPreview posts={data.posts} setpost={SetPost}/>
+          <PostPreview posts={posts}/>
         </div>
       <Footer />
     </>
