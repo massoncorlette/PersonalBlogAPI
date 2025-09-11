@@ -15,6 +15,18 @@ function Home() {
   const token = localStorage.getItem('usertoken');
   console.log(token, "tested");
 
+  //spinner upon mount with delay, post creation message with delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      SetLoading(false);
+    }, 2000);
+
+    const successTimer = setTimeout(() => {
+      SetSuccess(false);
+    }, 5000);
+    return () => clearTimeout(timer, successTimer); 
+  } ,[loading, SetSuccess, SetLoading]);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -44,9 +56,17 @@ function Home() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  if (!user) {
-    return <div>Loading...</div>;
+  
+  if (loading  || !user) {
+    return (
+      <>
+      <Navbar/>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}>
+          <div className="spinner"></div>
+        </div>
+      <Footer/>
+      </>
+    );
   }
 
   return (

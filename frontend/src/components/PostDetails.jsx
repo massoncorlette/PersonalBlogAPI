@@ -50,15 +50,12 @@ function PostDetails() {
         SetSuccess(true);
       }
 
+
     } catch (err) {
       SetError(err);
     }
   }
 
-
-  if (!posts) {
-    return <p>No data received.</p>;
-  }
 
   if (post) {
     return (
@@ -76,6 +73,7 @@ function PostDetails() {
               >
                 <div>
                   <input 
+                  onChange={(e) => SetComment(e.target.value)}
                   type="text" 
                   placeholder="Write a comment..." 
                   className={styles.input} />

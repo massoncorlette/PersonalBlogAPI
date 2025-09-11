@@ -47,8 +47,8 @@ async function handleCreateComment(req, res, next) {
     await prisma.comments.create({
       data: {
         createdAt: stringDate ,
-        content: req.body.content,
-        postID: req.params.postId,
+        content: req.body.comment,
+        postID: parseInt(req.params.postId),
         authorId: req.user.id,
       }
    });
@@ -76,7 +76,6 @@ async function handleCreateUser(req, res, next) {
         password: hashedPassword,
       }
    });
- // res.json("success", {user:user});
 
   } catch (error) {
     return res.status(400).json({ errors:error });

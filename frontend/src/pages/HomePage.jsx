@@ -8,25 +8,6 @@ import PostPreview from "../components/PostPreview";
 function HomePage() {
   const { user, posts, loading, success, SetSuccess, SetLoading, SetNewFetch } = useOutletContext();
 
-  //spinner upon mount with delay, post creation message with delay
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      SetLoading(false);
-    }, 2000);
-
-    const successTimer = setTimeout(() => {
-      SetSuccess(false);
-    }, 5000);
-    return () => clearTimeout(timer, successTimer); 
-  } ,[loading, SetSuccess, SetLoading]);
-
-  if (loading) {
-    return (
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}>
-        <div className="spinner"></div>
-      </div>
-    );
-  }
   
   if (user.admin) {
     return (
