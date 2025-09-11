@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function PostPreview({posts}) {
@@ -25,7 +25,6 @@ function PostPreview({posts}) {
     if (!error) {
       navigate(`/home/post/${result.post.id}`,{ state: { posts: posts, postId:postId } }) ;
     }
-
   }
 
   return (

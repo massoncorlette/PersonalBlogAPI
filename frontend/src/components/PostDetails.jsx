@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useOutletContext } from 'react-router-dom';
 import styles from '../styles/Createform.module.css';
 
  
@@ -7,7 +7,13 @@ function PostDetails() {
   const location = useLocation();
   const { posts, postId } = location.state || {}; 
 
+  const { loading, success, SetSuccess, SetLoading, SetNewFetch } = useOutletContext();
+
+  const [error, SetError] = useState(null);
+  const [comment, SetComment] = useState("");
   const [post, SetPostDetails] = useState(null);
+
+  const token = localStorage.getItem('usertoken');
 
   useEffect(() => {
     posts.forEach(element => {
@@ -16,6 +22,38 @@ function PostDetails() {
       }
     });
   }, [posts, postId]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`http://localhost:5000/home/posts/${postId}/comments`, {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          "Content-Type": "application/json",
+
+        },
+        body: JSON.stringify({
+          comment
+        }),
+      });
+
+      if (!response.ok) {
+        SetError("Failed to create comment");
+        return;
+      }
+
+      if (response.ok) {
+        SetNewFetch(true);
+        SetLoading(true);
+        SetSuccess(true);
+      }
+
+    } catch (err) {
+      SetError(err);
+    }
+  }
 
 
   if (!posts) {
@@ -33,8 +71,20 @@ function PostDetails() {
               <small className="post-date">{post.createdAt}</small>
             </div>
             <div className={styles.formInput}>
-              <input type="text" placeholder="Write a comment..." className={styles.input} />
-              <button className="comment-button">Add</button>
+              <form 
+              onSubmit={handleSubmit}
+              >
+                <div>
+                  <input 
+                  type="text" 
+                  placeholder="Write a comment..." 
+                  className={styles.input} />
+                  <button 
+                  className="comment-button"
+                  >Add</button>
+                </div>
+              </form>
+
             </div>
           </div>
           <div>

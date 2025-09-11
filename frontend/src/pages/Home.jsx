@@ -9,7 +9,8 @@ function Home() {
   const [user, SetUser] = useState(null);
   const [posts, SetPosts] = useState(null);
   const [fetched, SetNewFetch] = useState(false);
- // const [loading, setLoading] = useState(true);
+  const [loading, SetLoading] = useState(true);
+  const [success, SetSuccess] = useState(false);
   const [error, setError] = useState(null);
   const token = localStorage.getItem('usertoken');
   console.log(token, "tested");
@@ -51,7 +52,7 @@ function Home() {
   return (
     <>
     <Navbar/>
-      <Outlet context={{user, posts, SetNewFetch}} />
+      <Outlet context={{user, posts, loading, success, SetLoading, SetSuccess, SetNewFetch, }} />
     <Footer/>
     </>
 

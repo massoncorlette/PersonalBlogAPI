@@ -6,22 +6,19 @@ import CreatePost from "../components/admin/CreatePost";
 import PostPreview from "../components/PostPreview";
 
 function HomePage() {
-  const { user, posts, SetNewFetch } = useOutletContext();
-
-  const [loading, setLoading] = useState(true);
-  const [success, SetSuccess] = useState(false);
+  const { user, posts, loading, success, SetSuccess, SetLoading, SetNewFetch } = useOutletContext();
 
   //spinner upon mount with delay, post creation message with delay
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false);
+      SetLoading(false);
     }, 2000);
 
     const successTimer = setTimeout(() => {
       SetSuccess(false);
     }, 5000);
     return () => clearTimeout(timer, successTimer); 
-  } ,[loading]);
+  } ,[loading, SetSuccess, SetLoading]);
 
   if (loading) {
     return (
@@ -40,7 +37,7 @@ function HomePage() {
          <p>Post Created Succesfully!</p>
         ) : null}
 
-        <CreatePost setLoading={setLoading} SetNewFetch={SetNewFetch} SetSuccess={SetSuccess}/>
+        <CreatePost setLoading={SetLoading} SetNewFetch={SetNewFetch} SetSuccess={SetSuccess}/>
         <div id="postsPreviewContainer">
           <PostPreview posts={posts}/>
         </div>

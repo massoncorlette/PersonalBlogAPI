@@ -47,10 +47,9 @@ async function handleCreateComment(req, res, next) {
     await prisma.comments.create({
       data: {
         createdAt: stringDate ,
-        title: req.body.title,
         content: req.body.content,
-        postID: req.params.post-id,
-        authorId: req.params.author-id,
+        postID: req.params.postId,
+        authorId: req.user.id,
       }
    });
   } catch (error) {

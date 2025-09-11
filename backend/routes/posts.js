@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { getPostById } = require('../controllers/viewController');
-const { handleCreatePost } = require("../controllers/dataController/createController");
+const { handleCreatePost, handleCreateComment } = require("../controllers/dataController/createController");
 const passport = require('passport');
 require('../config/passport');
 
@@ -30,13 +30,16 @@ postsRouter.put('/:postId', (req, res) => {
   return res.send('edit post');
 });
 
-postsRouter.post('/:postId/:commentId', (req, res) => {
-  return res.send('post comment post');
+postsRouter.post('/:postId/comments', passport.authenticate('jwt', { session: false }), (req, res) => {
+  handleCreateComment(req, res);
+  return res.status(201).json({ msg: "Comment succesfully made." });
 });
 
 postsRouter.delete('/:postId/:commentId', (req, res) => {
   return res.send('delete comment');
 });
+
+
 
 
 module.exports = {postsRouter};
