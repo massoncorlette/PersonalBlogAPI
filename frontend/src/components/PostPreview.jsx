@@ -21,9 +21,10 @@ function PostPreview({posts}) {
     }  
     const result = await response.json();
 
+    console.log(result, "test");
 
     if (!error) {
-      navigate(`/home/post/${result.post.id}`,{ state: { posts: posts, postId:postId } }) ;
+      navigate(`/home/post/${result.post.id}`,{ state: { post: result.post} }) ;
     }
   }
 

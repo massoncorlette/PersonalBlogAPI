@@ -5,7 +5,12 @@ const prisma = new PrismaClient();
 async function getAllPosts(req, res, next) {
 
   try {
-    const files = await prisma.posts.findMany();
+    const files = await prisma.posts.findMany({
+      include: {
+        comments: true
+      }
+    }
+    );
 
    return files;
   } catch (error) {
@@ -21,6 +26,9 @@ async function getPostById(req, res, next) {
       where: {
         id: parseInt(req.params.postId),
       },
+      include: {
+        comments: true
+      }
    });
 
     return post;

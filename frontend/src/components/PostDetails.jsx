@@ -5,55 +5,51 @@ import styles from '../styles/Createform.module.css';
  
 function PostDetails() {
   const location = useLocation();
-  const { posts, postId } = location.state || {}; 
+  const { post } = location.state || {}; 
 
-  const { loading, success, SetSuccess, SetLoading, SetNewFetch } = useOutletContext();
+  const { SetLoading } = useOutletContext();
 
   const [error, SetError] = useState(null);
   const [comment, SetComment] = useState("");
-  const [post, SetPostDetails] = useState(null);
+  const [comments, SetUpdatedComments] = useState(null)
 
   const token = localStorage.getItem('usertoken');
 
   useEffect(() => {
-    posts.forEach(element => {
-      if (element.id == postId) {
-        SetPostDetails(element);
+    async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/home/posts/${post.id}/comments`, {
+          method: "POST",
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+  
+          },
+          body: JSON.stringify({
+            comment
+          }),
+        });
+  
+        if (!response.ok) {
+          SetError("Failed to create comment");
+          return;
+        }
+        const result = await response.json();
+  
+        if (response.ok) {
+          console.log(result);
+          SetUpdatedComments(result.comments);
+          SetLoading(true);
+        }
+  
+      } catch (err) {
+        SetError(err);
       }
-    });
-  }, [posts, postId]);
+    };
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch(`http://localhost:5000/home/posts/${postId}/comments`, {
-        method: "POST",
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          "Content-Type": "application/json",
-
-        },
-        body: JSON.stringify({
-          comment
-        }),
-      });
-
-      if (!response.ok) {
-        SetError("Failed to create comment");
-        return;
-      }
-
-      if (response.ok) {
-        SetNewFetch(true);
-        SetLoading(true);
-        SetSuccess(true);
-      }
-
-
-    } catch (err) {
-      SetError(err);
-    }
+  function handleSubmit() {
+    SetLoading(true);
   }
 
 
@@ -69,9 +65,11 @@ function PostDetails() {
             </div>
             <div className={styles.formInput}>
               <form 
-              onSubmit={handleSubmit}
-              >
-                <div>
+              onSubmit={() => handleSubmit}>
+                  {error ? (
+                  <p>A network error was encountered: {error}</p>
+                ) : null}
+                <div className={styles.formInputCommentContainer}>
                   <input 
                   onChange={(e) => SetComment(e.target.value)}
                   type="text" 
@@ -79,6 +77,7 @@ function PostDetails() {
                   className={styles.input} />
                   <button 
                   className="comment-button"
+                  type="submit"
                   >Add</button>
                 </div>
               </form>
@@ -87,9 +86,14 @@ function PostDetails() {
           </div>
           <div>
             <h3>Comments</h3>
-            <div className="comments-list">
-              <p>No comments yet</p>
-            </div>
+              {comments ? (
+              <div className="comments-list">
+              {comments.map((comment, index) => (
+                <div key={comment.id} className='postPreview'> 
+                  <div>{comment.content}</div>
+                </div>
+              ))}
+            </div>) : null}
           </div>  
         </div>
       </>

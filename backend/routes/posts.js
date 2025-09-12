@@ -15,8 +15,6 @@ postsRouter.get('/:postId', async (req, res, next ) => {
 
   const post = await getPostById(req, res, next);
 
-  console.log(post, "postRouter");
-
   res.json(
     {post}
   );
@@ -30,9 +28,9 @@ postsRouter.put('/:postId', (req, res) => {
   return res.send('edit post');
 });
 
-postsRouter.post('/:postId/comments', passport.authenticate('jwt', { session: false }), (req, res) => {
-  handleCreateComment(req, res);
-  return res.status(201).json({ msg: "Comment succesfully made." });
+postsRouter.post('/:postId/comments', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const comments = await handleCreateComment(req, res);
+  return res.json({comments});
 });
 
 postsRouter.delete('/:postId/:commentId', (req, res) => {

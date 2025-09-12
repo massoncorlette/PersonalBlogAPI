@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from '../../styles/Createform.module.css';
 
 // eslint-disable-next-line react/prop-types
-function CreatePost({setLoading, SetNewFetch, SetSuccess}) {
+function CreatePost({SetLoading, SetNewFetch, SetSuccess}) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState(null);
@@ -33,7 +33,7 @@ function CreatePost({setLoading, SetNewFetch, SetSuccess}) {
 
       if (response.ok) {
         SetNewFetch(true);
-        setLoading(true);
+        SetLoading(true);
         SetSuccess(true);
       }
 

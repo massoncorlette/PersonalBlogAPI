@@ -18,7 +18,7 @@ function HomePage() {
          <p>Post Created Succesfully!</p>
         ) : null}
 
-        <CreatePost setLoading={SetLoading} SetNewFetch={SetNewFetch} SetSuccess={SetSuccess}/>
+        <CreatePost SetLoading={SetLoading} SetNewFetch={SetNewFetch} SetSuccess={SetSuccess}/>
         <div id="postsPreviewContainer">
           <PostPreview posts={posts}/>
         </div>

@@ -14,8 +14,10 @@
 }
 
 .postDetailsContainer {
+  flex: 1;
   padding: 2rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   max-width: 600px;
@@ -38,9 +40,14 @@
 }
 
 .formInput,
-.formTextarea {
+.formTextarea,
+.formInputCommentContainer {
   display: flex;
   width: 100%;
+}
+
+ {
+
 }
 
 .input,

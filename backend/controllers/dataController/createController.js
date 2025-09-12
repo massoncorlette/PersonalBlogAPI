@@ -52,6 +52,17 @@ async function handleCreateComment(req, res, next) {
         authorId: req.user.id,
       }
    });
+
+   // retrieve updated comments for client side
+   const allPostComments = await prisma.comments.findMany({
+    where: {
+      postID: parseInt(req.params.postId)
+    }
+  });
+
+   const orderedPosts = [...allPostComments].reverse();
+
+   return orderedPosts;
   } catch (error) {
     return res.status(400).json({ errors:error });
   }
