@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function PostPreview({posts}) {
+  const { SetPost } = useOutletContext();
 
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
 
   // eslint-disable-next-line react/prop-types
 
@@ -21,10 +23,10 @@ function PostPreview({posts}) {
     }  
     const result = await response.json();
 
-    console.log(result, "test");
-
+    //Set Post details in parent Home component, then navigate to post details route
     if (!error) {
-      navigate(`/home/post/${result.post.id}`,{ state: { post: result.post} }) ;
+      SetPost(result.post);
+      navigate(`/home/post/${result.post.id}`) ;
     }
   }
 

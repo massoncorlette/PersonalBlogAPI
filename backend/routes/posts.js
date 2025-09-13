@@ -29,8 +29,8 @@ postsRouter.put('/:postId', (req, res) => {
 });
 
 postsRouter.post('/:postId/comments', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  const comments = await handleCreateComment(req, res);
-  return res.json({comments});
+  const updatedPost = await handleCreateComment(req, res);
+  return res.json({updatedPost});
 });
 
 postsRouter.delete('/:postId/:commentId', (req, res) => {

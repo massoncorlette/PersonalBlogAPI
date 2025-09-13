@@ -30,6 +30,7 @@ async function handleCreatePost(req, res, next) {
   }
 };
 
+const {getPostById} = require('../viewController');
 
 async function handleCreateComment(req, res, next) {
   const errors = validationResult(req);
@@ -53,20 +54,13 @@ async function handleCreateComment(req, res, next) {
       }
    });
 
-   // retrieve updated comments for client side
-   const allPostComments = await prisma.comments.findMany({
-    where: {
-      postID: parseInt(req.params.postId)
-    }
-  });
+   // retrieve post w/ updated comments for client side
+   const updatedPost = await getPostById(req, res, next);
 
-   const orderedPosts = [...allPostComments].reverse();
-
-   return orderedPosts;
+   return updatedPost;
   } catch (error) {
     return res.status(400).json({ errors:error });
   }
-
 };
 
 

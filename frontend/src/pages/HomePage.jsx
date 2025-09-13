@@ -6,7 +6,7 @@ import CreatePost from "../components/admin/CreatePost";
 import PostPreview from "../components/PostPreview";
 
 function HomePage() {
-  const { user, posts, loading, success, SetSuccess, SetLoading, SetNewFetch } = useOutletContext();
+  const { user, posts, success, SetSuccess, SetLoading, SetNewFetch } = useOutletContext();
 
   
   if (user.admin) {
