@@ -1,6 +1,8 @@
 For this project we will be setting up an API for users to be able to sign in access and comment on my personal blog, while on my admin side I can post and edit my posts. This is practice for me to keep my backend and frontend inside their own repos, keeping routes protected with JWT's upon requests from routes, and for login authorization.  
 JWT is generated upon user login and and stored client side for further requests until log out. Passport JWT strategy is used to jwt.verify requests instead of manually verify every request. 
 
+Frontend I am focusing on using the REST API endpoints to fetch res.json from backend controllers. Using useOutletContext, I can pass loaders and state setters from the Home parent into all child components. Any fetching in the child components can depend on the parent state (avoiding waterfall issues), while still allowing each child component to fetch from the endpoints as needed.
+
 Review this for following REST, REVIEW THE MODULAR SECTION at the bottom of page:
 https://www.robinwieruch.de/node-express-server-rest-api/
 
