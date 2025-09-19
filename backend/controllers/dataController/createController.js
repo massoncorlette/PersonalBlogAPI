@@ -19,7 +19,7 @@ async function handleCreatePost(req, res, next) {
   try {
     await prisma.posts.create({
       data: {
-        public: true,
+        public: req.body.published,
         createdAt: stringDate ,
         title: req.body.title,
         content: req.body.content,

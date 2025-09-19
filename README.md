@@ -11,6 +11,8 @@ ToDo:
  - Public/Non public feedback and setting on admin side
  - CRUD posts & comments
 
+ - **add GIF to README for admin side for function
+
 
 ---Template Notes---
 

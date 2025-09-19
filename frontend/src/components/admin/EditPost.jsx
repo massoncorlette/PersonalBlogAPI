@@ -1,23 +1,47 @@
-import { useState, useOutletContext } from "react";
+import { useState, useEffect } from "react";
+import { useOutletContext, useParams } from "react-router-dom";
 import styles from '../../styles/Createform.module.css';
 
 
-function EditPost() {
-  const { user, postDetails, SetPost, SetLoading, success, SetSuccess } = useOutletContext();
-  const [title, setTitle] = useState(postDetails.title);
-  const [content, setContent] = useState(postDetails.content);
-  const [published, setPublished] = useState(postDetails.public);
+// eslint-disable-next-line react/prop-types
+function EditPost({ setLoading, success, setSuccess }) {
+  const [postDetails, setCurrentPost] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [published, setPublished] = useState(null);
 
-  const [error, SetError] = useState(null);
+  const [error, setError] = useState(null);
   const token = localStorage.getItem('usertoken');
+  const postId = parseInt(useParams('postId'));
 
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/home/${postId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json', 
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        
+        setCurrentPost(result.posts);
+      } catch (error) {
+        setError(error);
+      } 
+    };
+    fetchPost();
+  },[postId, token]); 
  
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch(`http://localhost:5000/home/posts/${postDetails.id}/edit`, {
-        method: "POST",
+      const response = await fetch(`http://localhost:5000/home/posts/${postDetails.id}/`, {
+        method: "PUT",
         headers: {
           'Authorization': `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -30,22 +54,29 @@ function EditPost() {
       });
 
       if (!response.ok) {
-        SetError("Failed to create comment");
+        setError("Failed to create comment");
         return;
       }
       const result = await response.json();
 
       if (response.ok) {
         console.log(result);
-        SetPost(result.updatedPost);
-        SetLoading(true);
-        SetSuccess(true);
+        setCurrentPost(result.updatedPost);
+        setLoading(true);
+        setSuccess(true);
       }
 
     } catch (err) {
-      SetError(err);
+      setError(err);
     }
   };
+
+  const handleToggle = () => {
+   if (published) {
+    setPublished(false)
+  } else {
+    setPublished(true)
+  }};
 
   return (
     <div className={styles.formContainer}>
@@ -53,6 +84,13 @@ function EditPost() {
       {error ? (
       <p>A network error was encountered: {error}</p>
     ) : null}
+    <div>
+      {published ? (
+        <button onClick={handleToggle} className={styles.button} type="submit">Make Private</button>
+      ) : (
+        <button onClick={handleToggle} className={styles.button} type="submit">Make Public</button>
+      )}
+    </div>
 
       <form  className={styles.form} 
       onSubmit={handleSubmitEdit}>
@@ -79,7 +117,7 @@ function EditPost() {
           />
         </div>
 
-        <button className={styles.button} type="submit">Create Post</button>
+        <button className={styles.button} type="submit">Update Post</button>
       </form>
     </div>
   );

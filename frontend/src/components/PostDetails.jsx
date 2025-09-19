@@ -103,7 +103,14 @@ function PostDetails() {
     )
   } else {
     return (
-      <EditPost />
+    <EditPost
+      user={user}
+      postDetails={postDetails}
+      setPost={SetPost}
+      setLoading={SetLoading}
+      success={success}
+      setSuccess={SetSuccess}
+    />
     )
 
   }

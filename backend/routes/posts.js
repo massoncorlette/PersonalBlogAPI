@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { getPostById } = require('../controllers/viewController');
 const { handleCreatePost, handleCreateComment } = require("../controllers/dataController/createController");
+const { handleEditPost } = require("../controllers/dataController/updateController");
 const passport = require('passport');
 require('../config/passport');
 
@@ -24,9 +25,11 @@ postsRouter.delete('/:postId', (req, res) => {
   return res.send('delete post');
 });
 
-postsRouter.put('/:postId', (req, res) => {
-  return res.send('edit post');
+postsRouter.put('/:postId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const updatedPost = await handleEditPost(req, res);
+  return res.json({updatedPost});
 });
+
 
 postsRouter.post('/:postId/comments', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const updatedPost = await handleCreateComment(req, res);

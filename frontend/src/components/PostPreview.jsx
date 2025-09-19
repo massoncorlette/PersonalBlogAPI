@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function PostPreview({posts}) {
-  const { SetPost } = useOutletContext();
+  const { SetPost, postDetails } = useOutletContext();
 
   const [error, setError] = useState(null);
   const navigate = useNavigate();

@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from '../../styles/Createform.module.css';
 
 // eslint-disable-next-line react/prop-types
 function CreatePost({SetLoading, SetNewFetch, SetSuccess}) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [published, setPublished] = useState(postDetails.public);
+  const [published, setPublished] = useState(false);
 
   const [error, setError] = useState(null);
   const token = localStorage.getItem('usertoken');
+
+  useEffect(() => {
+
+  }, [published])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +28,7 @@ function CreatePost({SetLoading, SetNewFetch, SetSuccess}) {
         body: JSON.stringify({
           title,
           content,
-          public
+          published
         }),
       });
 
@@ -44,6 +48,13 @@ function CreatePost({SetLoading, SetNewFetch, SetSuccess}) {
       setError(err);
     }
   };
+  
+  const handleToggle = () => {
+   if (published) {
+    setPublished(false)
+  } else {
+    setPublished(true)
+  }};
 
   return (
     <div className={styles.formContainer}>
@@ -51,6 +62,13 @@ function CreatePost({SetLoading, SetNewFetch, SetSuccess}) {
       {error ? (
       <p>A network error was encountered: {error}</p>
     ) : null}
+    <div>
+      {published ? (
+        <button onClick={handleToggle} className={styles.button} type="submit">Make Private</button>
+      ) : (
+        <button onClick={handleToggle} className={styles.button} type="submit">Make Public</button>
+      )}
+    </div>
 
       <form  className={styles.form} 
       onSubmit={handleSubmit}>
@@ -76,7 +94,6 @@ function CreatePost({SetLoading, SetNewFetch, SetSuccess}) {
             required
           />
         </div>
-
         <button className={styles.button} type="submit">Create Post</button>
       </form>
     </div>
