@@ -19,6 +19,7 @@ async function getAllPosts(req, res, next) {
   }
 };
 
+// get post including comments using foreign key and select only alias for user 
 async function getPostById(req, res, next) {
 
   try {
@@ -27,7 +28,15 @@ async function getPostById(req, res, next) {
         id: parseInt(req.params.postId),
       },
       include: {
-        comments: true
+        comments: {
+          include: {
+            author: {
+              select: {
+                alias: true,
+              }
+            }
+          }
+        }
       }
    });
 

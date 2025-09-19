@@ -37,6 +37,15 @@ function PostPreview({posts}) {
       <button onClick={(e) => handleNavigate(post.id, e)} >
         <div>{post.title}</div>
         <div>{post.createdAt}</div>
+        {post.public ? (
+          <div className='publicBtnContainer'>
+            Published
+          </div>
+        ) : (
+          <div className='publicBtnContainer'>
+            Unpublished
+          </div>
+        )}
       </button>
     </div>
   ))}

@@ -1,65 +1,67 @@
-import { useState } from "react";
+import { useState, useOutletContext } from "react";
 import styles from '../../styles/Createform.module.css';
 
-// eslint-disable-next-line react/prop-types
-function CreatePost({SetLoading, SetNewFetch, SetSuccess}) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+
+function EditPost() {
+  const { user, postDetails, SetPost, SetLoading, success, SetSuccess } = useOutletContext();
+  const [title, setTitle] = useState(postDetails.title);
+  const [content, setContent] = useState(postDetails.content);
   const [published, setPublished] = useState(postDetails.public);
 
-  const [error, setError] = useState(null);
+  const [error, SetError] = useState(null);
   const token = localStorage.getItem('usertoken');
 
-  const handleSubmit = async (e) => {
+ 
+  const handleSubmitEdit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/home/posts", {
+      const response = await fetch(`http://localhost:5000/home/posts/${postDetails.id}/edit`, {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${token}`,
           "Content-Type": "application/json",
-
         },
         body: JSON.stringify({
           title,
           content,
-          public
+          published
         }),
       });
 
       if (!response.ok) {
-        setError("Failed to create post");
+        SetError("Failed to create comment");
         return;
       }
+      const result = await response.json();
 
       if (response.ok) {
-        SetNewFetch(true);
+        console.log(result);
+        SetPost(result.updatedPost);
         SetLoading(true);
         SetSuccess(true);
       }
 
     } catch (err) {
-      console.error(err);
-      setError(err);
+      SetError(err);
     }
   };
 
   return (
     <div className={styles.formContainer}>
-      <h2 className={styles.title}>Create a New Post</h2>
+      <h2 className={styles.title}>Edit Post</h2>
       {error ? (
       <p>A network error was encountered: {error}</p>
     ) : null}
 
       <form  className={styles.form} 
-      onSubmit={handleSubmit}>
+      onSubmit={handleSubmitEdit}>
         <div className={styles.formInput}>
           <input
             className={styles.input}
             id="title"
             type="text"
-            value={title}
+            value={postDetails.title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Post title"
             required
@@ -70,7 +72,7 @@ function CreatePost({SetLoading, SetNewFetch, SetSuccess}) {
           <textarea
             className={styles.textarea}
             id="content"
-            value={content}
+            value={postDetails.content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Write your post here..."
             required
@@ -83,4 +85,4 @@ function CreatePost({SetLoading, SetNewFetch, SetSuccess}) {
   );
 }
 
-export default CreatePost;
+export default EditPost;

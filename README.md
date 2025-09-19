@@ -8,16 +8,8 @@ https://www.robinwieruch.de/node-express-server-rest-api/
 
 
 ToDo:
-  Backend
-  - Setup all URI routes
-  - Testing all routes with POSTMAN
-  - Implement passport JWT strategy
-  
-  Frontend
-  - Setup fetch components w/ vanilla fetch
-  - console.log data for now
-  - Look into React fetch data documentation
-  - !!Give clear error feedback for non admin users CRUD Posts/Comments on protected routes
+ - Public/Non public feedback and setting on admin side
+ - CRUD posts & comments
 
 
 ---Template Notes---

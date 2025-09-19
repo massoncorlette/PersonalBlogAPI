@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useOutletContext } from 'react-router-dom';
+import EditPost from './admin/EditPost';
 import styles from '../styles/Createform.module.css';
 
  
 function PostDetails() {
-  const { postDetails, SetPost, SetLoading, success, SetSuccess } = useOutletContext();
+  const { user, postDetails, SetPost, SetLoading, success, SetSuccess } = useOutletContext();
 
   const [error, SetError] = useState(null);
   const [comment, SetComment] = useState("");
@@ -12,7 +13,7 @@ function PostDetails() {
   const token = localStorage.getItem('usertoken');
 
  
-  const handleSubmit = async (e) => {
+  const handleSubmitComment = async (e) => {
     e.preventDefault();
 
     try {
@@ -45,7 +46,7 @@ function PostDetails() {
     }
   };
 
-  if (postDetails) {
+  if (postDetails && !user.admin) {
     return (
       <>
         <div className={styles.postDetailsContainer}>
@@ -57,7 +58,7 @@ function PostDetails() {
             </div>
             <div className={styles.formInput}>
               <form 
-              onSubmit={handleSubmit}>
+              onSubmit={handleSubmitComment}>
                   {error ? (
                   <p>A network error was encountered: {error}</p>
                 ) : null}
@@ -76,7 +77,7 @@ function PostDetails() {
 
             </div>
           </div>
-          <div>
+          <div className="commentsContainer">
             <h3>Comments</h3>
 
             {success ? (
@@ -86,8 +87,12 @@ function PostDetails() {
             {postDetails.comments ? (
               <div className="comments-list">
                 {[...postDetails.comments].reverse().map((comment) => (
-                  <div key={comment.id} className="postPreview">
-                    <div>{comment.content}</div>
+                  <div key={comment.id} className="commentsDiv">
+                    <div>
+                      <div>{comment.author.alias}</div>
+                      <div>{comment.content}</div>
+                    </div>
+                    <div>{comment.createdAt}</div>
                   </div>
                 ))}
               </div>
@@ -96,6 +101,11 @@ function PostDetails() {
         </div>
       </>
     )
+  } else {
+    return (
+      <EditPost />
+    )
+
   }
 
 }

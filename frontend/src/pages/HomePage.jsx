@@ -20,7 +20,7 @@ function HomePage() {
 
         <CreatePost SetLoading={SetLoading} SetNewFetch={SetNewFetch} SetSuccess={SetSuccess}/>
         <div id="postsPreviewContainer">
-          <PostPreview posts={posts}/>
+          <PostPreview posts={posts} user={user}/>
         </div>
       </>
     );
@@ -30,7 +30,7 @@ function HomePage() {
     <>
       <div>Welcome home, <i>{user.alias}</i> </div>
       <div id="postsPreviewContainer">
-        <PostPreview posts={posts}/>
+        <PostPreview posts={posts} user={user}/>
       </div>
     </>
   )
