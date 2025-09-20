@@ -19,9 +19,7 @@ function HomePage() {
         ) : null}
 
         <CreatePost SetLoading={SetLoading} SetNewFetch={SetNewFetch} SetSuccess={SetSuccess}/>
-        <div id="postsPreviewContainer">
-          <PostPreview posts={posts} user={user}/>
-        </div>
+        <PostPreview posts={posts} user={user}/>
       </>
     );
   }

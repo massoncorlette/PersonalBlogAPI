@@ -40,6 +40,11 @@ async function getPostById(req, res, next) {
       }
    });
 
+   // protect post data from client side request
+   if (post.public == false) {
+    return false;
+   };
+
     return post;
   } catch (error) {
     console.error(error);

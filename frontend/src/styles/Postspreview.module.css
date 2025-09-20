@@ -1,0 +1,60 @@
+.postsPreviewContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  justify-content: center;
+}
+
+.postPreview {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 250px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: background 0.2s ease;
+}
+
+.postPreview:hover {
+  background: #f9f9f9;
+}
+
+.postPreview button {
+  all: unset; /* remove default button look */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.postPreview div:first-child {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.postPreview div:nth-child(2) {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.publicBtnContainer {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.publicBtnContainerPublished {
+  background: #e6f8ec;
+  color: #1e7a3d;
+}
+
+.publicBtnContainerUnpublished {
+  background: #fdeaea;
+  color: #b21c1c;
+}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
 import EditPost from './admin/EditPost';
-import styles from '../styles/Createform.module.css';
+import styles from '../styles/Editform.module.css';
 
  
 function PostDetails() {
@@ -10,6 +10,7 @@ function PostDetails() {
   const [postDetails, SetPost] = useState(null);
   const [error, SetError] = useState(null);
   const [comment, SetComment] = useState(null);
+  const navigate = useNavigate();
 
   const token = localStorage.getItem('usertoken');
   const {postId} = useParams();
@@ -29,6 +30,10 @@ function PostDetails() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const result = await response.json();
+
+        if (!result.post) {
+          throw new Error('Author has not made post Public!');
+        }
 
         SetPost(result.post);
       } catch (error) {
@@ -72,15 +77,35 @@ function PostDetails() {
     }
   };
 
+  const handleNavigate = (event) => {
+    event.preventDefault();
+    navigate('/home');
+  }
+
+
+  if (error) {
+    return (
+      <>
+      <div className={styles.errorContainer}>
+        <div>Error: {error.message}</div>
+        <div>
+          <button onClick={handleNavigate}>Go Home</button>
+        </div>
+      </div>
+
+      </>
+    ) 
+  }
+
   if (postDetails && !user.admin) {
     return (
       <>
         <div className={styles.postDetailsContainer}>
-          <div>
+          <div className={styles.postDetailsFormContainer}>
             <div className={styles.form}>
               <h2 className={styles.title}>{postDetails.title}</h2>
-              <p className="post-body">{postDetails.content}</p>
-              <small className="post-date">{postDetails.createdAt}</small>
+              <p className={styles.postBody}>{postDetails.content}</p>
+              <small className={styles.postDate}>{postDetails.createdAt}</small>
             </div>
             <div className={styles.formInput}>
               <form 
@@ -96,14 +121,14 @@ function PostDetails() {
                   className={styles.input} />
                 </div>
                 <button 
-                  className="comment-button"
+                  className={styles.commentButton}
                   type="submit"
                   >Add</button>
               </form>
 
             </div>
           </div>
-          <div className="commentsContainer">
+          <div className={styles.commentsContainer}>
             <h3>Comments</h3>
 
             {success ? (
@@ -111,14 +136,14 @@ function PostDetails() {
             ) : null}
 
             {postDetails.comments ? (
-              <div className="comments-list">
+              <div className={styles.commentslist}>
                 {[...postDetails.comments].reverse().map((comment) => (
-                  <div key={comment.id} className="commentsDiv">
-                    <div>
+                  <div key={comment.id} className={styles.commentsDiv}>
+                    <div className={styles.commentsDivUser}>
                       <div>{comment.author.alias}</div>
                       <div>{comment.content}</div>
                     </div>
-                    <div>{comment.createdAt}</div>
+                    <div id={styles.commentsDivDate}>{comment.createdAt}</div>
                   </div>
                 ))}
               </div>

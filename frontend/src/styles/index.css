@@ -62,9 +62,24 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
+  background: none;   
+  color: inherit; 
 }
 
+#homeBtn {
+  background: none;       
+  border: none;          
+  padding: 0;             
+  margin: 0;              
+  cursor: pointer;    
+  color: black;    
+}
 
+#homeBtn h1 {
+  margin: 0;             
+  font-size: 2rem;        
+  font-weight: bold;      
+}
 
 #logoutBtn {
   padding: 0.4em 1.0em;

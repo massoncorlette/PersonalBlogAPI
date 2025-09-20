@@ -22,10 +22,18 @@ function Navbar() {
     })
   }
 
+  const handleNavHome = (event) => {
+    event.preventDefault();
+
+    navigate("/home");
+  }
+
   return (
     <>
       <div id="navbarContainer">
-      <h1>Blog Official Home</h1>
+      <button onClick={handleNavHome} id='homeBtn'>
+       <h1>Blog Official Home</h1>        
+      </button>
         <div id="logoutContainer">
           <button id="logoutBtn" onClick={handleLogout}>
             <img src="/logout.svg"></img>
