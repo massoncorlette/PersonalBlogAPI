@@ -8,7 +8,6 @@ function Home() {
 
   const [user, SetUser] = useState(null);
   const [posts, SetPosts] = useState(null);
-  const [postDetails, SetPost] = useState(null);
   const [fetched, SetNewFetch] = useState(false);
   const [loading, SetLoading] = useState(true);
   const [success, SetSuccess] = useState(false);
@@ -73,7 +72,7 @@ function Home() {
   return (
     <>
     <Navbar/>
-      <Outlet context={{user, posts, postDetails, loading, success, SetPost, SetLoading, SetSuccess, SetNewFetch, }} />
+      <Outlet context={{user, posts, loading, success, SetLoading, SetSuccess, SetNewFetch, }} />
     <Footer/>
     </>
 

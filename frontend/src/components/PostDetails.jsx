@@ -1,18 +1,44 @@
 import { useState, useEffect } from "react";
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import EditPost from './admin/EditPost';
 import styles from '../styles/Createform.module.css';
 
  
 function PostDetails() {
-  const { user, postDetails, SetPost, SetLoading, success, SetSuccess } = useOutletContext();
+  const { user, SetLoading, success, SetSuccess, SetNewFetch  } = useOutletContext();
 
+  const [postDetails, SetPost] = useState(null);
   const [error, SetError] = useState(null);
-  const [comment, SetComment] = useState("");
+  const [comment, SetComment] = useState(null);
 
   const token = localStorage.getItem('usertoken');
+  const {postId} = useParams();
+  console.log(postId);
 
- 
+   useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/home/posts/${postId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json', 
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+
+        SetPost(result.post);
+      } catch (error) {
+        SetError(error);
+      } 
+    };
+    fetchPost();
+  },[postId, token]); 
+
+
   const handleSubmitComment = async (e) => {
     e.preventDefault();
 
@@ -101,7 +127,7 @@ function PostDetails() {
         </div>
       </>
     )
-  } else {
+  } else if (postDetails) {
     return (
     <EditPost
       user={user}
@@ -110,6 +136,7 @@ function PostDetails() {
       setLoading={SetLoading}
       success={success}
       setSuccess={SetSuccess}
+      setNewFetch={SetNewFetch}
     />
     )
 

@@ -1,41 +1,19 @@
 import { useState, useEffect } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams, useNavigate } from "react-router-dom";
 import styles from '../../styles/Createform.module.css';
 
 
 // eslint-disable-next-line react/prop-types
-function EditPost({ setLoading, success, setSuccess }) {
-  const [postDetails, setCurrentPost] = useState('');
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [published, setPublished] = useState(null);
+function EditPost({ postDetails, setPost, setLoading, success, setSuccess, setNewFetch }) {
+  const [title, setTitle] = useState(postDetails.title);
+  const [content, setContent] = useState(postDetails.content);
+  const [published, setPublished] = useState(postDetails.public);
 
   const [error, setError] = useState(null);
   const token = localStorage.getItem('usertoken');
-  const postId = parseInt(useParams('postId'));
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/home/${postId}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json', 
-          },
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const result = await response.json();
-        
-        setCurrentPost(result.posts);
-      } catch (error) {
-        setError(error);
-      } 
-    };
-    fetchPost();
-  },[postId, token]); 
+
  
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
@@ -61,9 +39,11 @@ function EditPost({ setLoading, success, setSuccess }) {
 
       if (response.ok) {
         console.log(result);
-        setCurrentPost(result.updatedPost);
+        setPost(result.updatedPost);
         setLoading(true);
         setSuccess(true);
+        setNewFetch(true);
+        navigate('/home')
       }
 
     } catch (err) {
@@ -99,7 +79,7 @@ function EditPost({ setLoading, success, setSuccess }) {
             className={styles.input}
             id="title"
             type="text"
-            value={postDetails.title}
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Post title"
             required
@@ -110,7 +90,7 @@ function EditPost({ setLoading, success, setSuccess }) {
           <textarea
             className={styles.textarea}
             id="content"
-            value={postDetails.content}
+            value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Write your post here..."
             required
